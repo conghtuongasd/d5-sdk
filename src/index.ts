@@ -10,8 +10,6 @@ export { getAddress } from './common/utils/get-address';
 export { ChainId } from './enums/chain-id';
 export { UniswapVersion } from './enums/uniswap-version';
 export {
-  ChainIdAndProvider,
-  EthereumProvider,
   EthersProvider,
 } from './ethers-provider';
 export { GasSettings } from './factories/pair/models/gas-settings';
@@ -19,7 +17,6 @@ export { TradeContext } from './factories/pair/models/trade-context';
 export { TradeDirection } from './factories/pair/models/trade-direction';
 export { Transaction } from './factories/pair/models/transaction';
 export {
-  UniswapPairContextForChainId,
   UniswapPairContextForProviderUrl,
 } from './factories/pair/models/uniswap-pair-contexts';
 export { UniswapPairSettings } from './factories/pair/models/uniswap-pair-settings';

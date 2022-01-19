@@ -5,9 +5,9 @@ import { ErrorCodes } from '../errors/error-codes';
 import { UniswapError } from '../errors/uniswap-error';
 import { deepClone } from '../utils/deep-clone';
 
-const ETH_PREFIX = '_ETH';
-export const ETH_SYMBOL = 'ETH';
-export const ETH_NAME = 'Ethers';
+const ETH_PREFIX = '_CELO';
+export const ETH_SYMBOL = 'CELO';
+export const ETH_NAME = 'CELO';
 
 export const appendEthToContractAddress = (contractAddress: string): string => {
   return `${contractAddress}${ETH_PREFIX}`;
@@ -46,7 +46,7 @@ export const turnTokenIntoEthForResponse = (
 /**
  * ETH token info
  */
-export class ETH {
+export class Celo {
   public static MAINNET(): Token {
     return {
       chainId: ChainId.Mainnet,

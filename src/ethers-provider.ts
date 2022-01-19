@@ -3,19 +3,8 @@ import { Contract, ContractInterface, providers } from 'ethers';
 import { ErrorCodes } from './common/errors/error-codes';
 import { UniswapError } from './common/errors/uniswap-error';
 import { ChainId, ChainNames } from './enums/chain-id';
-import { CustomNetwork } from './factories/pair/models/custom-network';
 import { CeloProvider } from "@celo-tools/celo-ethers-wrapper";
 
-export interface ChainIdAndProvider {
-  chainId: ChainId;
-  providerUrl?: string | undefined;
-  customNetwork?: CustomNetwork | undefined;
-}
-
-export interface EthereumProvider {
-  ethereumProvider: any;
-  customNetwork?: CustomNetwork | undefined;
-}
 
 export class EthersProvider {
   private _ethersProvider: CeloProvider;

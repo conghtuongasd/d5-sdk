@@ -2,7 +2,7 @@ import { ContractCallContext } from 'ethereum-multicall';
 import { BigNumber } from 'ethers';
 import { ContractContext as ERC20ContractContext } from '../../ABI/types/erc20-contract';
 import { ContractContext } from '../../common/contract-context';
-import { ETH, isNativeEth } from '../../common/tokens/eth';
+import { Celo, isNativeEth } from '../../common/tokens/eth';
 import { isTokenOverrideInfo } from '../../common/tokens/overrides';
 import { getAddress } from '../../common/utils/get-address';
 import { CustomMulticall } from '../../custom-multicall';
@@ -33,14 +33,14 @@ export class TokenFactory {
     private _cloneUniswapContractDetails?:
       | CloneUniswapContractDetails
       | undefined
-  ) {}
+  ) { }
 
   /**
    * Get the token details
    */
   public async getToken(): Promise<Token> {
     if (isNativeEth(this._tokenContractAddress)) {
-      return ETH.info(
+      return Celo.info(
         this._ethersProvider.network().chainId,
         this._customNetwork?.nativeWrappedTokenInfo
       );
@@ -110,11 +110,11 @@ export class TokenFactory {
         ethereumAddress,
         uniswapVersion === UniswapVersion.v2
           ? uniswapContracts.v2.getRouterAddress(
-              this._cloneUniswapContractDetails
-            )
+            this._cloneUniswapContractDetails
+          )
           : uniswapContracts.v3.getRouterAddress(
-              this._cloneUniswapContractDetails
-            )
+            this._cloneUniswapContractDetails
+          )
       );
 
       return allowance.toHexString();
@@ -230,11 +230,11 @@ export class TokenFactory {
             ethereumAddress,
             uniswapVersion === UniswapVersion.v2
               ? uniswapContracts.v2.getRouterAddress(
-                  this._cloneUniswapContractDetails
-                )
+                this._cloneUniswapContractDetails
+              )
               : uniswapContracts.v3.getRouterAddress(
-                  this._cloneUniswapContractDetails
-                ),
+                this._cloneUniswapContractDetails
+              ),
           ],
         },
         {

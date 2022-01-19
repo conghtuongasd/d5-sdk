@@ -1,4 +1,3 @@
-import { ChainId } from '../../../enums/chain-id';
 import { UniswapPairSettings } from './uniswap-pair-settings';
 
 interface UniswapPairContextBase {
@@ -13,11 +12,6 @@ export interface UniswapPairContextForEthereumProvider
   ethereumProvider: any;
 }
 
-export interface UniswapPairContextForChainId extends UniswapPairContextBase {
-  chainId: ChainId | number;
-}
-
-export interface UniswapPairContextForProviderUrl
-  extends UniswapPairContextForChainId {
+export interface UniswapPairContextForProviderUrl extends UniswapPairContextBase {
   providerUrl: string;
 }

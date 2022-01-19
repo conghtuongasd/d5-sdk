@@ -4,7 +4,7 @@ import { BigNumber as EthersBigNumber } from 'ethers';
 import { ContractContext } from '../../common/contract-context';
 import { ErrorCodes } from '../../common/errors/error-codes';
 import { UniswapError } from '../../common/errors/uniswap-error';
-import { ETH, isNativeEth } from '../../common/tokens/eth';
+import { Celo, isNativeEth } from '../../common/tokens/eth';
 import { isTokenOverrideInfo } from '../../common/tokens/overrides';
 import { getAddress } from '../../common/utils/get-address';
 import { CustomMulticall } from '../../custom-multicall';
@@ -28,7 +28,7 @@ export class TokensFactory {
     private _cloneUniswapContractDetails?:
       | CloneUniswapContractDetails
       | undefined
-  ) {}
+  ) { }
 
   /**
    * Get the tokens details
@@ -76,7 +76,7 @@ export class TokensFactory {
           contractCallContexts.push(contractCallContext);
         } else {
           tokens.push(
-            ETH.info(
+            Celo.info(
               this._ethersProvider.network().chainId,
               this._customNetwork?.nativeWrappedTokenInfo
             )
@@ -148,7 +148,7 @@ export class TokensFactory {
           )
         );
       } else {
-        const token = ETH.info(
+        const token = Celo.info(
           this._ethersProvider.network().chainId,
           this._customNetwork?.nativeWrappedTokenInfo
         );
@@ -183,7 +183,7 @@ export class TokensFactory {
                 '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
               balanceOf: await this._ethersProvider.balanceOf(ethereumAddress),
             },
-            token: ETH.info(
+            token: Celo.info(
               this._ethersProvider.network().chainId,
               this._customNetwork?.nativeWrappedTokenInfo
             ),
@@ -205,7 +205,7 @@ export class TokensFactory {
         const resultInfoV2 = contractCallResults.results[result];
         const resultInfoV3 =
           contractCallResults.results[
-            result.replace(`_${UniswapVersion.v2}`, `_${UniswapVersion.v3}`)
+          result.replace(`_${UniswapVersion.v2}`, `_${UniswapVersion.v3}`)
           ];
 
         if (!format) {
@@ -225,15 +225,15 @@ export class TokensFactory {
               overridenTokenInfo !== undefined
                 ? overridenTokenInfo
                 : {
-                    chainId: this._ethersProvider.network().chainId,
-                    contractAddress:
-                      resultInfoV3.originalContractCallContext.contractAddress,
-                    symbol:
-                      resultInfoV3.callsReturnContext[SYMBOL].returnValues[0],
-                    decimals:
-                      resultInfoV3.callsReturnContext[DECIMALS].returnValues[0],
-                    name: resultInfoV3.callsReturnContext[NAME].returnValues[0],
-                  },
+                  chainId: this._ethersProvider.network().chainId,
+                  contractAddress:
+                    resultInfoV3.originalContractCallContext.contractAddress,
+                  symbol:
+                    resultInfoV3.callsReturnContext[SYMBOL].returnValues[0],
+                  decimals:
+                    resultInfoV3.callsReturnContext[DECIMALS].returnValues[0],
+                  name: resultInfoV3.callsReturnContext[NAME].returnValues[0],
+                },
           });
         } else {
           const decimals =
@@ -269,15 +269,15 @@ export class TokensFactory {
               overridenTokenInfo !== undefined
                 ? overridenTokenInfo
                 : {
-                    chainId: this._ethersProvider.network().chainId,
-                    contractAddress:
-                      resultInfoV3.originalContractCallContext.contractAddress,
-                    symbol:
-                      resultInfoV3.callsReturnContext[SYMBOL].returnValues[0],
-                    decimals:
-                      resultInfoV3.callsReturnContext[DECIMALS].returnValues[0],
-                    name: resultInfoV3.callsReturnContext[NAME].returnValues[0],
-                  },
+                  chainId: this._ethersProvider.network().chainId,
+                  contractAddress:
+                    resultInfoV3.originalContractCallContext.contractAddress,
+                  symbol:
+                    resultInfoV3.callsReturnContext[SYMBOL].returnValues[0],
+                  decimals:
+                    resultInfoV3.callsReturnContext[DECIMALS].returnValues[0],
+                  name: resultInfoV3.callsReturnContext[NAME].returnValues[0],
+                },
           });
         }
       }
@@ -303,11 +303,11 @@ export class TokensFactory {
             ethereumAddress,
             uniswapVersion === UniswapVersion.v2
               ? uniswapContracts.v2.getRouterAddress(
-                  this._cloneUniswapContractDetails
-                )
+                this._cloneUniswapContractDetails
+              )
               : uniswapContracts.v3.getRouterAddress(
-                  this._cloneUniswapContractDetails
-                ),
+                this._cloneUniswapContractDetails
+              ),
           ],
         },
         {

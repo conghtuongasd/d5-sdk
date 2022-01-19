@@ -4,7 +4,6 @@ import { ErrorCodes } from '../../common/errors/error-codes';
 import { UniswapError } from '../../common/errors/uniswap-error';
 import { getAddress } from '../../common/utils/get-address';
 import { isAddress } from '../../common/utils/is-address';
-import { ChainId } from '../../enums/chain-id';
 import { EthersProvider } from '../../ethers-provider';
 import { TokensFactory } from '../token/tokens.factory';
 import {
@@ -97,19 +96,6 @@ export class UniswapPair {
    * Create factory to be able to call methods on the 2 tokens
    */
   public async createFactory(): Promise<UniswapPairFactory> {
-    if (this._uniswapPairContext.settings?.customNetwork === undefined) {
-      const chainId = this._ethersProvider.network().chainId;
-      if (
-        chainId !== ChainId.Mainnet &&
-        chainId !== ChainId.Alfajores
-      ) {
-        throw new UniswapError(
-          `ChainId - ${chainId} is not supported. This lib only supports mainnet(1), ropsten(4), kovan(42), rinkeby(4), and görli(5)`,
-          ErrorCodes.chainIdNotSupported
-        );
-      }
-    }
-
     const tokensFactory = new TokensFactory(
       this._ethersProvider,
       this._uniswapPairContext.settings?.customNetwork
