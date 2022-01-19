@@ -95,7 +95,7 @@ export class UniswapRouterFactory {
     private _toToken: Token,
     private _settings: UniswapPairSettings,
     private _ethersProvider: EthersProvider
-  ) {}
+  ) { }
 
   /**
    * Get all possible routes will only go up to 4 due to gas increase the more routes
@@ -414,7 +414,7 @@ export class UniswapRouterFactory {
     );
 
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET &&
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet &&
       this._settings.gasSettings &&
       allowanceAndBalances.enoughBalance
     ) {
@@ -844,11 +844,11 @@ export class UniswapRouterFactory {
       to:
         uniswapVersion === UniswapVersion.v2
           ? uniswapContracts.v2.getRouterAddress(
-              this._settings.cloneUniswapContractDetails
-            )
+            this._settings.cloneUniswapContractDetails
+          )
           : uniswapContracts.v3.getRouterAddress(
-              this._settings.cloneUniswapContractDetails
-            ),
+            this._settings.cloneUniswapContractDetails
+          ),
       from: this._ethereumAddress,
       data,
       value: Constants.EMPTY_HEX_STRING,
@@ -869,11 +869,11 @@ export class UniswapRouterFactory {
       to:
         uniswapVersion === UniswapVersion.v2
           ? uniswapContracts.v2.getRouterAddress(
-              this._settings.cloneUniswapContractDetails
-            )
+            this._settings.cloneUniswapContractDetails
+          )
           : uniswapContracts.v3.getRouterAddress(
-              this._settings.cloneUniswapContractDetails
-            ),
+            this._settings.cloneUniswapContractDetails
+          ),
       from: this._ethereumAddress,
       data,
       value: toEthersBigNumber(parseEther(ethValue)).toHexString(),
@@ -979,24 +979,24 @@ export class UniswapRouterFactory {
     const enoughV2Allowance =
       direction === TradeDirection.input
         ? this.hasGotEnoughAllowance(
-            amountToTrade.toFixed(),
-            allowanceAndBalancesForTokens.fromToken.allowanceV2
-          )
+          amountToTrade.toFixed(),
+          allowanceAndBalancesForTokens.fromToken.allowanceV2
+        )
         : this.hasGotEnoughAllowance(
-            bestRouteQuote.expectedConvertQuote,
-            allowanceAndBalancesForTokens.fromToken.allowanceV2
-          );
+          bestRouteQuote.expectedConvertQuote,
+          allowanceAndBalancesForTokens.fromToken.allowanceV2
+        );
 
     const enoughV3Allowance =
       direction === TradeDirection.input
         ? this.hasGotEnoughAllowance(
-            amountToTrade.toFixed(),
-            allowanceAndBalancesForTokens.fromToken.allowanceV3
-          )
+          amountToTrade.toFixed(),
+          allowanceAndBalancesForTokens.fromToken.allowanceV3
+        )
         : this.hasGotEnoughAllowance(
-            bestRouteQuote.expectedConvertQuote,
-            allowanceAndBalancesForTokens.fromToken.allowanceV3
-          );
+          bestRouteQuote.expectedConvertQuote,
+          allowanceAndBalancesForTokens.fromToken.allowanceV3
+        );
 
     return {
       enoughV2Allowance,
@@ -1070,7 +1070,7 @@ export class UniswapRouterFactory {
     enoughAllowanceV3: boolean
   ): Promise<RouteQuote[]> {
     if (this._settings.gasSettings && !this._settings.disableMultihops) {
-      const ethContract = WETHContract.MAINNET().contractAddress;
+      const ethContract = WETHContract.Mainnet().contractAddress;
 
       const fiatPrices = await this._coinGecko.getCoinGeckoFiatPrices([
         this._toToken.contractAddress,
@@ -1078,7 +1078,7 @@ export class UniswapRouterFactory {
       ]);
 
       const toUsdValue = fiatPrices[this._toToken.contractAddress];
-      const ethUsdValue = fiatPrices[WETHContract.MAINNET().contractAddress];
+      const ethUsdValue = fiatPrices[WETHContract.Mainnet().contractAddress];
 
       if (toUsdValue && ethUsdValue) {
         const bestRouteQuoteHops = this.getBestRouteQuotesHops(
@@ -1092,9 +1092,9 @@ export class UniswapRouterFactory {
 
         let bestRoute:
           | {
-              routeQuote: RouteQuote;
-              expectedConvertQuoteMinusTxFees: BigNumber;
-            }
+            routeQuote: RouteQuote;
+            expectedConvertQuoteMinusTxFees: BigNumber;
+          }
           | undefined;
         for (let i = 0; i < bestRouteQuoteHops.length; i++) {
           const route = bestRouteQuoteHops[i];
@@ -1140,7 +1140,7 @@ export class UniswapRouterFactory {
           const routeIndex = allRoutes.findIndex(
             (r) =>
               r.expectedConvertQuote ===
-                bestRoute!.routeQuote.expectedConvertQuote &&
+              bestRoute!.routeQuote.expectedConvertQuote &&
               bestRoute!.routeQuote.routeText === r.routeText
           );
 
@@ -1441,7 +1441,7 @@ export class UniswapRouterFactory {
                   amountToTrade,
                   callReturnContext,
                   contractCallReturnContext.originalContractCallContext.context[
-                    i
+                  i
                   ],
                   direction,
                   contractCallReturnContext.originalContractCallContext
@@ -1455,7 +1455,7 @@ export class UniswapRouterFactory {
                   amountToTrade,
                   callReturnContext,
                   contractCallReturnContext.originalContractCallContext.context[
-                    i
+                  i
                   ],
                   direction,
                   contractCallReturnContext.originalContractCallContext
@@ -1469,7 +1469,7 @@ export class UniswapRouterFactory {
                   amountToTrade,
                   callReturnContext,
                   contractCallReturnContext.originalContractCallContext.context[
-                    i
+                  i
                   ],
                   direction,
                   contractCallReturnContext.originalContractCallContext
@@ -1543,11 +1543,11 @@ export class UniswapRouterFactory {
     const expectedConvertQuote =
       direction === TradeDirection.input
         ? convertQuoteUnformatted
-            .shiftedBy(this._toToken.decimals * -1)
-            .toFixed(this._toToken.decimals)
+          .shiftedBy(this._toToken.decimals * -1)
+          .toFixed(this._toToken.decimals)
         : convertQuoteUnformatted
-            .shiftedBy(this._fromToken.decimals * -1)
-            .toFixed(this._fromToken.decimals);
+          .shiftedBy(this._fromToken.decimals * -1)
+          .toFixed(this._fromToken.decimals);
 
     const expectedConvertQuoteOrTokenAmountInMaxWithSlippage =
       this.getExpectedConvertQuoteOrTokenAmountInMaxWithSlippage(
@@ -1566,17 +1566,17 @@ export class UniswapRouterFactory {
     const data =
       direction === TradeDirection.input
         ? this.generateTradeDataErc20ToErc20Input(
-            amountToTrade,
-            new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
-            routeQuoteTradeContext,
-            tradeExpires.toString()
-          )
+          amountToTrade,
+          new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
+          routeQuoteTradeContext,
+          tradeExpires.toString()
+        )
         : this.generateTradeDataErc20ToErc20Output(
-            new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
-            amountToTrade,
-            routeQuoteTradeContext,
-            tradeExpires.toString()
-          );
+          new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
+          amountToTrade,
+          routeQuoteTradeContext,
+          tradeExpires.toString()
+        );
 
     const transaction = this.buildUpTransactionErc20(uniswapVersion, data);
 
@@ -1648,11 +1648,11 @@ export class UniswapRouterFactory {
     const expectedConvertQuote =
       direction === TradeDirection.input
         ? convertQuoteUnformatted
-            .shiftedBy(this._toToken.decimals * -1)
-            .toFixed(this._toToken.decimals)
+          .shiftedBy(this._toToken.decimals * -1)
+          .toFixed(this._toToken.decimals)
         : new BigNumber(formatEther(convertQuoteUnformatted)).toFixed(
-            this._fromToken.decimals
-          );
+          this._fromToken.decimals
+        );
 
     const expectedConvertQuoteOrTokenAmountInMaxWithSlippage =
       this.getExpectedConvertQuoteOrTokenAmountInMaxWithSlippage(
@@ -1670,17 +1670,17 @@ export class UniswapRouterFactory {
     const data =
       direction === TradeDirection.input
         ? this.generateTradeDataEthToErc20Input(
-            amountToTrade,
-            new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
-            routeQuoteTradeContext,
-            tradeExpires.toString()
-          )
+          amountToTrade,
+          new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
+          routeQuoteTradeContext,
+          tradeExpires.toString()
+        )
         : this.generateTradeDataEthToErc20Output(
-            new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
-            amountToTrade,
-            routeQuoteTradeContext,
-            tradeExpires.toString()
-          );
+          new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
+          amountToTrade,
+          routeQuoteTradeContext,
+          tradeExpires.toString()
+        );
 
     const transaction = this.buildUpTransactionEth(
       uniswapVersion,
@@ -1740,12 +1740,11 @@ export class UniswapRouterFactory {
             ),
             this._toToken,
           ],
-          routeText: `${
-            turnTokenIntoEthForResponse(
-              this._fromToken,
-              this._settings?.customNetwork?.nativeCurrency
-            ).symbol
-          } > ${this._toToken.symbol}`,
+          routeText: `${turnTokenIntoEthForResponse(
+            this._fromToken,
+            this._settings?.customNetwork?.nativeCurrency
+          ).symbol
+            } > ${this._toToken.symbol}`,
           routePathArray: [
             this._fromToken.contractAddress,
             this._toToken.contractAddress,
@@ -1782,11 +1781,11 @@ export class UniswapRouterFactory {
     const expectedConvertQuote =
       direction === TradeDirection.input
         ? new BigNumber(formatEther(convertQuoteUnformatted)).toFixed(
-            this._toToken.decimals
-          )
+          this._toToken.decimals
+        )
         : convertQuoteUnformatted
-            .shiftedBy(this._fromToken.decimals * -1)
-            .toFixed(this._fromToken.decimals);
+          .shiftedBy(this._fromToken.decimals * -1)
+          .toFixed(this._fromToken.decimals);
 
     const expectedConvertQuoteOrTokenAmountInMaxWithSlippage =
       this.getExpectedConvertQuoteOrTokenAmountInMaxWithSlippage(
@@ -1804,17 +1803,17 @@ export class UniswapRouterFactory {
     const data =
       direction === TradeDirection.input
         ? this.generateTradeDataErc20ToEthInput(
-            amountToTrade,
-            new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
-            routeQuoteTradeContext,
-            tradeExpires.toString()
-          )
+          amountToTrade,
+          new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
+          routeQuoteTradeContext,
+          tradeExpires.toString()
+        )
         : this.generateTradeDataErc20ToEthOutput(
-            new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
-            amountToTrade,
-            routeQuoteTradeContext,
-            tradeExpires.toString()
-          );
+          new BigNumber(expectedConvertQuoteOrTokenAmountInMaxWithSlippage),
+          amountToTrade,
+          routeQuoteTradeContext,
+          tradeExpires.toString()
+        );
 
     const transaction = this.buildUpTransactionErc20(uniswapVersion, data);
 
@@ -1868,12 +1867,11 @@ export class UniswapRouterFactory {
               this._settings?.customNetwork?.nativeCurrency
             ),
           ],
-          routeText: `${this._fromToken.symbol} > ${
-            turnTokenIntoEthForResponse(
-              this._toToken,
-              this._settings?.customNetwork?.nativeCurrency
-            ).symbol
-          }`,
+          routeText: `${this._fromToken.symbol} > ${turnTokenIntoEthForResponse(
+            this._toToken,
+            this._settings?.customNetwork?.nativeCurrency
+          ).symbol
+            }`,
           routePathArray: [
             this._fromToken.contractAddress,
             this._toToken.contractAddress,
@@ -2009,7 +2007,7 @@ export class UniswapRouterFactory {
 
   private get allMainTokens(): Token[] {
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET ||
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet ||
       this._settings.customNetwork
     ) {
       const tokens: (Token | undefined)[] = [
@@ -2029,7 +2027,7 @@ export class UniswapRouterFactory {
 
   private get mainCurrenciesPairsForFromToken(): Token[][] {
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET ||
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet ||
       this._settings.customNetwork
     ) {
       const pairs = [
@@ -2058,7 +2056,7 @@ export class UniswapRouterFactory {
 
   private get mainCurrenciesPairsForToToken(): Token[][] {
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET ||
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet ||
       this._settings.customNetwork
     ) {
       const pairs: (Token | undefined)[][] = [
@@ -2090,7 +2088,7 @@ export class UniswapRouterFactory {
 
   private get mainCurrenciesPairsForUSDT(): Token[][] {
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET ||
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet ||
       this._settings.customNetwork
     ) {
       const pairs: (Token | undefined)[][] = [
@@ -2118,7 +2116,7 @@ export class UniswapRouterFactory {
 
   private get mainCurrenciesPairsForCOMP(): Token[][] {
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET ||
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet ||
       this._settings.customNetwork
     ) {
       const pairs: (Token | undefined)[][] = [
@@ -2145,7 +2143,7 @@ export class UniswapRouterFactory {
 
   private get mainCurrenciesPairsForDAI(): Token[][] {
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET ||
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet ||
       this._settings.customNetwork
     ) {
       const pairs: (Token | undefined)[][] = [
@@ -2173,7 +2171,7 @@ export class UniswapRouterFactory {
 
   private get mainCurrenciesPairsForUSDC(): Token[][] {
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET ||
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet ||
       this._settings.customNetwork
     ) {
       const pairs: (Token | undefined)[][] = [
@@ -2201,7 +2199,7 @@ export class UniswapRouterFactory {
 
   private get mainCurrenciesPairsForWBTC(): Token[][] {
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET ||
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet ||
       this._settings.customNetwork
     ) {
       const tokens: (Token | undefined)[][] = [
@@ -2219,7 +2217,7 @@ export class UniswapRouterFactory {
 
   private get mainCurrenciesPairsForWETH(): Token[][] {
     if (
-      this._ethersProvider.provider.network.chainId === ChainId.MAINNET ||
+      this._ethersProvider.provider.network.chainId === ChainId.Mainnet ||
       this._settings.customNetwork
     ) {
       const tokens: (Token | undefined)[][] = [

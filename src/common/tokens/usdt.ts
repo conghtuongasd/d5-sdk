@@ -7,9 +7,9 @@ import { UniswapError } from '../errors/uniswap-error';
  * USDT token context CHANGE CONTRACT ADDRESS INFO ETC
  */
 export class USDT {
-  public static MAINNET(): Token {
+  public static Mainnet(): Token {
     return {
-      chainId: ChainId.MAINNET,
+      chainId: ChainId.Mainnet,
       contractAddress: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       decimals: 18,
       symbol: 'USDT',
@@ -23,8 +23,8 @@ export class USDT {
    */
   public static token(chainId: ChainId | number): Token {
     switch (chainId) {
-      case ChainId.MAINNET:
-        return this.MAINNET();
+      case ChainId.Mainnet:
+        return this.Mainnet();
       default:
         throw new UniswapError(
           `${chainId} is not allowed`,

@@ -1,6 +1,5 @@
+import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import {
-  ChainIdAndProvider,
-  EthereumProvider,
   EthersProvider,
 } from '../../ethers-provider';
 import { TokenFactory } from './token.factory';
@@ -8,7 +7,7 @@ import { TokenFactory } from './token.factory';
 export class TokenFactoryPublic extends TokenFactory {
   constructor(
     tokenContractAddress: string,
-    providerContext: ChainIdAndProvider | EthereumProvider
+    providerContext: CeloProvider
   ) {
     super(tokenContractAddress, new EthersProvider(providerContext));
   }

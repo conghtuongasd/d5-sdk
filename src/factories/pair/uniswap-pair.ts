@@ -1,3 +1,4 @@
+import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { CoinGecko } from '../../coin-gecko';
 import { ErrorCodes } from '../../common/errors/error-codes';
 import { UniswapError } from '../../common/errors/uniswap-error';
@@ -7,8 +8,6 @@ import { ChainId } from '../../enums/chain-id';
 import { EthersProvider } from '../../ethers-provider';
 import { TokensFactory } from '../token/tokens.factory';
 import {
-  UniswapPairContextForChainId,
-  UniswapPairContextForEthereumProvider,
   UniswapPairContextForProviderUrl,
 } from './models/uniswap-pair-contexts';
 import { UniswapPairFactoryContext } from './models/uniswap-pair-factory-context';
@@ -19,10 +18,7 @@ export class UniswapPair {
   private _ethersProvider: EthersProvider;
 
   constructor(
-    private _uniswapPairContext:
-      | UniswapPairContextForChainId
-      | UniswapPairContextForProviderUrl
-      | UniswapPairContextForEthereumProvider
+    private _uniswapPairContext: UniswapPairContextForProviderUrl
   ) {
     if (!this._uniswapPairContext.fromTokenContractAddress) {
       throw new UniswapError(
@@ -80,36 +76,14 @@ export class UniswapPair {
       this._uniswapPairContext.ethereumAddress
     );
 
-    const chainId = (<UniswapPairContextForChainId>this._uniswapPairContext)
-      .chainId;
-
     const providerUrl = (<UniswapPairContextForProviderUrl>(
       this._uniswapPairContext
     )).providerUrl;
 
-    if (providerUrl && chainId) {
-      this._ethersProvider = new EthersProvider({
-        chainId,
-        providerUrl,
-        customNetwork: this._uniswapPairContext.settings?.customNetwork,
-      });
-      return;
-    }
-
-    if (chainId) {
-      this._ethersProvider = new EthersProvider({ chainId });
-      return;
-    }
-
-    const ethereumProvider = (<UniswapPairContextForEthereumProvider>(
-      this._uniswapPairContext
-    )).ethereumProvider;
+    const ethereumProvider = new CeloProvider(providerUrl);
 
     if (ethereumProvider) {
-      this._ethersProvider = new EthersProvider({
-        ethereumProvider,
-        customNetwork: this._uniswapPairContext.settings?.customNetwork,
-      });
+      this._ethersProvider = new EthersProvider(ethereumProvider);
       return;
     }
 
@@ -126,11 +100,8 @@ export class UniswapPair {
     if (this._uniswapPairContext.settings?.customNetwork === undefined) {
       const chainId = this._ethersProvider.network().chainId;
       if (
-        chainId !== ChainId.MAINNET &&
-        chainId !== ChainId.ROPSTEN &&
-        chainId !== ChainId.RINKEBY &&
-        chainId !== ChainId.GÖRLI &&
-        chainId !== ChainId.KOVAN
+        chainId !== ChainId.Mainnet &&
+        chainId !== ChainId.Alfajores
       ) {
         throw new UniswapError(
           `ChainId - ${chainId} is not supported. This lib only supports mainnet(1), ropsten(4), kovan(42), rinkeby(4), and görli(5)`,

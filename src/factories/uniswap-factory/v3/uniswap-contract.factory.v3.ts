@@ -13,7 +13,7 @@ export class UniswapContractFactoryV3 {
   constructor(
     private _ethersProvider: EthersProvider,
     private _factoryAddress: string = UniswapContractContextV3.factoryAddress
-  ) {}
+  ) { }
 
   public createPool(tokenA: string, tokenB: string, fee: BigNumberish): string {
     return this._uniswapFactoryContract.interface.encodeFunctionData(

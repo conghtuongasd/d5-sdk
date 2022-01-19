@@ -9,7 +9,7 @@ import { UniswapError } from '../errors/uniswap-error';
 export class DAI {
   public static MAINNET(): Token {
     return {
-      chainId: ChainId.MAINNET,
+      chainId: ChainId.Mainnet,
       contractAddress: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
       decimals: 18,
       symbol: 'DAI',
@@ -23,7 +23,7 @@ export class DAI {
    */
   public static token(chainId: ChainId | number): Token {
     switch (chainId) {
-      case ChainId.MAINNET:
+      case ChainId.Mainnet:
         return this.MAINNET();
       default:
         throw new UniswapError(

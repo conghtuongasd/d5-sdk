@@ -9,7 +9,7 @@ import { UniswapError } from '../errors/uniswap-error';
 export class COMP {
   public static MAINNET(): Token {
     return {
-      chainId: ChainId.MAINNET,
+      chainId: ChainId.Mainnet,
       contractAddress: '0xc00e94Cb662C3520282E6f5717214004A7f26888',
       decimals: 18,
       symbol: 'COMP',
@@ -23,7 +23,7 @@ export class COMP {
    */
   public static token(chainId: ChainId | number): Token {
     switch (chainId) {
-      case ChainId.MAINNET:
+      case ChainId.Mainnet:
         return this.MAINNET();
       default:
         throw new UniswapError(

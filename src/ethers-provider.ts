@@ -4,6 +4,7 @@ import { ErrorCodes } from './common/errors/error-codes';
 import { UniswapError } from './common/errors/uniswap-error';
 import { ChainId, ChainNames } from './enums/chain-id';
 import { CustomNetwork } from './factories/pair/models/custom-network';
+import { CeloProvider } from "@celo-tools/celo-ethers-wrapper";
 
 export interface ChainIdAndProvider {
   chainId: ChainId;
@@ -17,68 +18,9 @@ export interface EthereumProvider {
 }
 
 export class EthersProvider {
-  private _ethersProvider:
-    | providers.StaticJsonRpcProvider
-    | providers.JsonRpcProvider
-    | providers.InfuraProvider
-    | providers.Web3Provider;
-  constructor(private _providerContext: ChainIdAndProvider | EthereumProvider) {
-    const chainId = (<ChainIdAndProvider>this._providerContext).chainId;
-    if (chainId) {
-      const chainName = this.getChainName(chainId);
-      const providerUrl = (<ChainIdAndProvider>this._providerContext)
-        .providerUrl;
-      if (providerUrl) {
-        this._ethersProvider = new providers.StaticJsonRpcProvider(
-          providerUrl,
-          {
-            name: chainName,
-            chainId: chainId,
-          }
-        );
-      } else {
-        this._ethersProvider = new providers.InfuraProvider(
-          chainId,
-          this._getApiKey
-        );
-      }
-    } else {
-      const ethereumProvider = (<EthereumProvider>this._providerContext)
-        .ethereumProvider;
-      if (!ethereumProvider) {
-        throw new UniswapError(
-          'Wrong ethers provider context',
-          ErrorCodes.wrongEthersProviderContext
-        );
-      }
-
-      if (ethereumProvider._isProvider) {
-        this._ethersProvider = ethereumProvider;
-      } else {
-        this._ethersProvider = new providers.Web3Provider(ethereumProvider);
-      }
-    }
-  }
-
-  /**
-   * Get the chain name
-   * @param chainId The chain id
-   * @returns
-   */
-  private getChainName(chainId: number): string {
-    if (this._providerContext.customNetwork) {
-      return this._providerContext.customNetwork.nameNetwork;
-    }
-
-    const chainName = ChainNames.get(chainId);
-    if (!chainName) {
-      throw new UniswapError(
-        `Can not find chain name for ${chainId}. This lib only supports mainnet(1), ropsten(4), kovan(42), rinkeby(4) and görli(5)`,
-        ErrorCodes.canNotFindChainId
-      );
-    }
-
-    return chainName;
+  private _ethersProvider: CeloProvider;
+  constructor(providerContext: CeloProvider) {
+    this._ethersProvider = providerContext;
   }
 
   /**
@@ -145,40 +87,14 @@ export class EthersProvider {
   /**
    * Get provider url
    */
-  public getProviderUrl(): string | undefined {
-    const ethereumProvider = (<EthereumProvider>this._providerContext)
-      .ethereumProvider;
-    if (ethereumProvider) {
-      return undefined;
-    }
-
-    const providerUrl = (<ChainIdAndProvider>this._providerContext).providerUrl;
-    if (providerUrl) {
-      return providerUrl;
-    }
-
-    const chainId = (<ChainIdAndProvider>this._providerContext).chainId;
-
+  public getProviderUrl(chainId: any): string | undefined {
     switch (chainId) {
-      case ChainId.MAINNET:
-        return `https://mainnet.infura.io/v3/${this._getApiKey}`;
-      case ChainId.ROPSTEN:
-        return `https://ropsten.infura.io/v3/${this._getApiKey}`;
-      case ChainId.RINKEBY:
-        return `https://rinkeby.infura.io/v3/${this._getApiKey}`;
-      case ChainId.GÖRLI:
-        return `https://goerli.infura.io/v3/${this._getApiKey}`;
-      case ChainId.KOVAN:
-        return `https://kovan.infura.io/v3/${this._getApiKey}`;
+      case ChainId.Mainnet:
+        return `https://forno.celo.org`;
+      case ChainId.Alfajores:
+        return `https://alfajores-forno.celo-testnet.org`;
       default:
         return undefined;
     }
-  }
-
-  /**
-   * Get the api key
-   */
-  private get _getApiKey(): string {
-    return '9aa3d95b3bc440fa88ea12eaa4456161';
   }
 }

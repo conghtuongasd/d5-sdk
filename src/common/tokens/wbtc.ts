@@ -7,9 +7,9 @@ import { UniswapError } from '../errors/uniswap-error';
  * WBTC token context
  */
 export class WBTC {
-  public static MAINNET(): Token {
+  public static Mainnet(): Token {
     return {
-      chainId: ChainId.MAINNET,
+      chainId: ChainId.Mainnet,
       contractAddress: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
       decimals: 8,
       symbol: 'WBTC',
@@ -23,8 +23,8 @@ export class WBTC {
    */
   public static token(chainId: ChainId | number): Token {
     switch (chainId) {
-      case ChainId.MAINNET:
-        return this.MAINNET();
+      case ChainId.Mainnet:
+        return this.Mainnet();
       default:
         throw new UniswapError(
           `${chainId} is not allowed`,

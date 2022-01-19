@@ -1,12 +1,11 @@
+import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import {
-  ChainIdAndProvider,
-  EthereumProvider,
   EthersProvider,
 } from '../../../ethers-provider';
 import { UniswapRouterContractFactoryV2 } from './uniswap-router-contract.factory.v2';
 
 export class UniswapRouterContractFactoryV2Public extends UniswapRouterContractFactoryV2 {
-  constructor(providerContext: ChainIdAndProvider | EthereumProvider) {
+  constructor(providerContext: CeloProvider) {
     super(new EthersProvider(providerContext));
   }
 }
