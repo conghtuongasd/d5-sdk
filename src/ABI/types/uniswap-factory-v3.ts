@@ -1,5 +1,11 @@
+import {
+  ContractTransaction,
+  ContractInterface,
+  BytesLike as Arrayish,
+  BigNumber,
+  BigNumberish,
+} from 'ethers';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
-import { BigNumber, BigNumberish, ContractTransaction } from 'ethers';
 
 export type ContractContext = EthersContractContextV5<
   UniswapFactoryV3,
@@ -66,6 +72,21 @@ export type UniswapFactoryV3MethodNames =
   | 'owner'
   | 'parameters'
   | 'setOwner';
+export interface FeeAmountEnabledEventEmittedResponse {
+  fee: BigNumberish;
+  tickSpacing: BigNumberish;
+}
+export interface OwnerChangedEventEmittedResponse {
+  oldOwner: string;
+  newOwner: string;
+}
+export interface PoolCreatedEventEmittedResponse {
+  token0: string;
+  token1: string;
+  fee: BigNumberish;
+  tickSpacing: BigNumberish;
+  pool: string;
+}
 export interface ParametersResponse {
   factory: string;
   0: string;

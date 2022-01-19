@@ -2,7 +2,7 @@ export { COMP } from './comp';
 export { DAI } from './dai';
 export {
   appendEthToContractAddress,
-  ETH,
+  Celo,
   isNativeEth,
   removeEthFromContractAddress,
   turnTokenIntoEthForResponse,

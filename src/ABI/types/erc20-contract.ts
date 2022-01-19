@@ -1,5 +1,11 @@
+import {
+  ContractTransaction,
+  ContractInterface,
+  BytesLike as Arrayish,
+  BigNumber,
+  BigNumberish,
+} from 'ethers';
 import { EthersContractContextV5 } from 'ethereum-abi-types-generator';
-import { BigNumber, BigNumberish, ContractTransaction } from 'ethers';
 
 export type ContractContext = EthersContractContextV5<
   Erc20Contract,
@@ -63,6 +69,16 @@ export type Erc20ContractMethodNames =
   | 'symbol'
   | 'transfer'
   | 'allowance';
+export interface ApprovalEventEmittedResponse {
+  owner: string;
+  spender: string;
+  value: BigNumberish;
+}
+export interface TransferEventEmittedResponse {
+  from: string;
+  to: string;
+  value: BigNumberish;
+}
 export interface Erc20Contract {
   /**
    * Payable: false
