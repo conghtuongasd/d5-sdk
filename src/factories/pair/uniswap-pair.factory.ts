@@ -7,7 +7,7 @@ import { UniswapError } from '../../common/errors/uniswap-error';
 import {
   removeEthFromContractAddress,
   turnTokenIntoEthForResponse,
-} from '../../common/tokens/eth';
+} from '../../common/tokens/celo';
 import { deepClone } from '../../common/utils/deep-clone';
 import { getTradePath } from '../../common/utils/trade-path';
 import { TradePath } from '../../enums/trade-path';

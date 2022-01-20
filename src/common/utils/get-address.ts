@@ -3,7 +3,7 @@ import {
   appendEthToContractAddress,
   isNativeEth,
   removeEthFromContractAddress,
-} from '../tokens/eth';
+} from '../tokens/celo';
 
 export function getAddress(address: string, keepEthPrefix = false): string {
   const parsedAddress = ethers.utils.getAddress(

@@ -4,7 +4,7 @@ import { BigNumber as EthersBigNumber } from 'ethers';
 import { ContractContext } from '../../common/contract-context';
 import { ErrorCodes } from '../../common/errors/error-codes';
 import { UniswapError } from '../../common/errors/uniswap-error';
-import { Celo, isNativeEth } from '../../common/tokens/eth';
+import { Celo, isNativeEth } from '../../common/tokens/celo';
 import { isTokenOverrideInfo } from '../../common/tokens/overrides';
 import { getAddress } from '../../common/utils/get-address';
 import { CustomMulticall } from '../../custom-multicall';

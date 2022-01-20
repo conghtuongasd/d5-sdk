@@ -6,7 +6,7 @@ export {
   isNativeEth,
   removeEthFromContractAddress,
   turnTokenIntoEthForResponse,
-} from './eth';
+} from './celo';
 export { USDC } from './usdc';
 export { USDT } from './usdt';
 export { WETHContract } from './weth';

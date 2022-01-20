@@ -2,7 +2,7 @@ import { ContractCallContext } from 'ethereum-multicall';
 import { BigNumber } from 'ethers';
 import { ContractContext as ERC20ContractContext } from '../../ABI/types/erc20-contract';
 import { ContractContext } from '../../common/contract-context';
-import { Celo, isNativeEth } from '../../common/tokens/eth';
+import { Celo, isNativeEth } from '../../common/tokens/celo';
 import { isTokenOverrideInfo } from '../../common/tokens/overrides';
 import { getAddress } from '../../common/utils/get-address';
 import { CustomMulticall } from '../../custom-multicall';

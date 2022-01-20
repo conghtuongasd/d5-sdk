@@ -19,7 +19,7 @@ import {
   isNativeEth,
   removeEthFromContractAddress,
   turnTokenIntoEthForResponse,
-} from '../../common/tokens/eth';
+} from '../../common/tokens/celo';
 import { USDC } from '../../common/tokens/usdc';
 import { USDT } from '../../common/tokens/usdt';
 import { WBTC } from '../../common/tokens/wbtc';
